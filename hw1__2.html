@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Menu</title>
+  <script>
+		// Описываем базовый класс
+		function Container() {
+			this.id = '';
+			this.className = '';
+			this.htmlCode = '';
+		}
+
+		Container.prototype.render = function () {
+			return this.htmlCode;
+		};
+
+		// Описываем класс меню
+		function Menu(my_id, my_class, my_items) {
+			Container.call(this);
+
+			this.id = my_id;
+			this.className = my_class;
+			this.items = my_items;
+		}
+
+		Menu.prototype = Object.create(Container.prototype);
+		Menu.prototype.constructor = Menu;
+
+		Menu.prototype.render = function () {
+			var result = '<ul class="' + this.className + '" id="' + this.id + '">';
+			this.items.forEach(function (item) {
+				result += item.render();
+			});
+
+			// Также можно использовать и другую конструкцию, например на случай
+			// с объектами.
+			//
+			// for (var i = 0; i < this.items.length; i++) {
+			//     if(this.items[i] instanceof MenuItem){
+			//         result += this.items[i].render();
+			//     }
+			// }
+			//
+			// Результат будет одинаковый
+
+			result += '</ul>';
+			return result;
+		};
+// remove
+    Menu.prototype.remove = function () {
+    	document.querySelector('#'+ this.id).remove();
+    };
+
+		function removeItem(a) {
+			menu.remove(a);
+		}
+
+// subMenu
+    function SubMenu(my_perent, my_id, my_class, my_items) {
+	    Menu.call(this);
+	    this.my_perent = my_perent;
+	    this.id = my_id;
+	    this.className = my_class;
+	    this.items = my_items;
+    }
+
+
+    SubMenu.prototype = Object.create(Menu.prototype);
+		SubMenu.prototype.constructor = SubMenu;
+
+
+
+		SubMenu.prototype.render = function () {
+			var perent = document.querySelector(this.my_perent);
+			var result = '<ul class="' + this.className + '" id="' + this.id + '">';
+      this.items.forEach(function (item) {
+				result += item.render();
+			});
+			result += '</ul>';
+			perent.appendChild(result);
+			return perent;
+		};
+
+		function SubMenuItem(my_href, my_name, my_id) {
+			Container.call(this);
+			this.href = my_href;
+			this.name = my_name;
+			this.my_id = my_id;
+		}
+
+		SubMenuItem.prototype = Object.create(MenuItem.prototype);
+		SubMenuItem.prototype.constructor = SubMenuItem;
+
+
+		// SubMenuItem.prototype.render - кажется не нужен, т.к. он у SubMenuItem не отличается от MenuItem
+    /*
+		SubMenuItem.prototype.render = function () {
+			return '<li id="'+ this.my_id + '" ><a href="' + this.href + '">' + this.name + '</a></li>';
+		};
+		*/
+
+
+
+
+		// Описываем класс пунктов меню
+		function MenuItem(my_href, my_name, my_id) {
+			Container.call(this);
+			this.href = my_href;
+			this.name = my_name;
+			this.my_id = my_id;
+		}
+
+		MenuItem.prototype = Object.create(Container.prototype);
+		MenuItem.prototype.constructor = MenuItem;
+
+		MenuItem.prototype.render = function () {
+			return '<li id="'+ this.my_id + '" ><a href="' + this.href + '">' + this.name + '</a></li>';
+		};
+
+		//******Варианты вывода нашего меню*******
+		// Вариант №1
+		var menu_1 = new MenuItem('/', 'Главная', '1');
+		var menu_2 = new MenuItem('/catalogue/', 'Каталог', '2');
+		var menu_3 = new MenuItem('/contacts/', 'Контакты', '3');
+
+		var menu_items = [menu_1, menu_2, menu_3];
+		var menu = new Menu('my_menu', 'my_class', menu_items);
+
+
+		var cont = document.querySelector('#menu');
+
+
+
+
+		var subMenu_1 = new SubMenuItem('/', 'submenu1', '11');
+		var subMenu_2 = new SubMenuItem('/catalogue/', 'submenu2', '22');
+		var subMenu_3 = new SubMenuItem('/contacts/', 'submenu3', '33');
+		var subMenu_items = [subMenu_1, subMenu_2, subMenu_3];
+		var subMenu = new SubMenu(1, 'my_SubMenu', 'my_SubClass', subMenu_items );
+
+		window.onload = function () {
+
+			document.getElementById('menu').innerHTML = menu.render();
+			subMenu.render();
+
+
+
+
+			document.querySelector('#btn').addEventListener('click', function () {
+				removeItem(cont);
+
+			});
+		};
+
+		// Вариант №2 - более изящный
+		// window.onload = function () {
+		//     var menuBlock = document.getElementById('menu');
+		//     var menu = new Menu('my_menu', 'my_class', [
+		//         new MenuItem('/', 'Главная'),
+		//         new MenuItem('/catalogue/', 'Каталог'),
+		//         new MenuItem('/contacts/', 'Контакты')
+		//     ]);
+		//     menuBlock.innerHTML = menu.render();
+		// }
+
+		// window.onload - этим мы говорим браузеру, что сначала надо загрузить html
+		// разметку а после уже исполнить наш код. Чтобы не прибегать к этой конструкции,
+		// можно тэг <script> поставить перед закрывающим </body>
+
+  </script>
+</head>
+<body>
+<div id="menu"></div>
+
+
+<button id="btn">remove</button>
+</body>
+</html>
