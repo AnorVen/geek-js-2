@@ -132,7 +132,7 @@
         var subMenu_items = [subMenu_1, subMenu_2, subMenu_3];
         */
 		//var cont = document.querySelector('#menu');
-	//	var menu = new Menu('my_menu', 'my_class', menu_items);
+		//	var menu = new Menu('my_menu', 'my_class', menu_items);
 
 		//var submenu = new SubMenu('my_SubMenu', 'my_SubClass', subMenu_items);
 
@@ -156,10 +156,11 @@
 					var menuItems = [];
 					var subMenuItems = [];
 					for(var i = 0; i< items.length;i++){
-						if(items[i].href != 'href'){
-							subMenuItems.push(new SubMenuItem(items[i].href, items[i].title))
+						for ( var j = 0; j < items[i].length; j++){
+							menuItems.push(new MenuItem(items[i].key, items[i].value))
             }
-					//	menuItems.push(new MenuItem(items[i].href, items[i].title))
+
+						console.log(menuItems);
 					}
 
 					var menuBlock = document.getElementById('menu');
@@ -167,27 +168,12 @@
 					menuBlock.innerHTML = menu.render();
 
 
-					}
 				}
+			}
 
 
-			};
+		};
 
-
-		// Вариант №2 - более изящный
-		// window.onload = function () {
-		//     var menuBlock = document.getElementById('menu');
-		//     var menu = new Menu('my_menu', 'my_class', [
-		//         new MenuItem('/', 'Главная'),
-		//         new MenuItem('/catalogue/', 'Каталог'),
-		//         new MenuItem('/contacts/', 'Контакты')
-		//     ]);
-		//     menuBlock.innerHTML = menu.render();
-		// }
-
-		// window.onload - этим мы говорим браузеру, что сначала надо загрузить html
-		// разметку а после уже исполнить наш код. Чтобы не прибегать к этой конструкции,
-		// можно тэг <script> поставить перед закрывающим </body>
 
 
 
