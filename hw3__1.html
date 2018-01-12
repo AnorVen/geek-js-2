@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>email</title>
+  <script>
+		window.onload = function () {
+
+			// mail.mail@mail.mail.mail.ru
+			var regExp = /^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$/i;
+			/*
+            console.log(regExp.test('mail@mail.ru'));
+            console.log(regExp.test('mail.mail@mail.mail.mail.ru'));
+            console.log(regExp.test('my-my@mail.ru.ru'));
+            console.log(regExp.test('my-my@mail.mail.4u'));
+            console.log(regExp.test('mail$@mail.test.ru'));
+            console.log(regExp.test('mail@mail.'));
+       */
+
+
+			var str = document.querySelector('#str');
+			var replace = document.querySelector('#replace');
+
+			replace.addEventListener('click', function () {
+				str.innerText = str.innerText.replace(/(\B')|('\B)/g, '"');
+			});
+
+			var form = document.querySelector('#form');
+			var name = document.querySelector('#name');
+			var nameLabel = document.querySelector('#name-label');
+			form.addEventListener('submit', function () {
+				console.log(name.value);
+				if (/^([а-яё]{1,})|([a-z]{1,})$/i.test(name.value) === true) {
+					console.log(true);
+					return true;
+				} else {
+					console.log(false);
+					nameLabel.innerText = "Имя";
+					nameLabel.innerText = nameLabel.innerText + " - Должно содержать только буквы";
+					return false
+
+				}
+			})
+
+		};
+
+
+  </script>
+</head>
+<body>
+<p id="str">'Lorem' 'i'psum' 'dolor' 'sit' 'amet', 'consectetur' 'adipisicing' 'elit'.</p>
+<button id="replace">replace</button>
+
+
+<form action="#" id="form">
+  <label id="name-label" for="name">Имя</label>
+  <input id="name" type="text">
+  <label for="tel">Телефон</label>
+  <input id="tel" type="tel">
+  <label for="mail">Почта</label>
+  <input id="mail" type="text">
+  <textarea name="text" id="" cols="30" rows="10"></textarea>
+  <button type="submit" id="submit">submit</button>
+</form>
+
+</body>
+</html>
