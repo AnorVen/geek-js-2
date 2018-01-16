@@ -4,183 +4,93 @@
   <meta charset="UTF-8">
   <title>Menu</title>
   <script>
-		// Описываем базовый класс
-		function Container() {
-			this.id = '';
-			this.className = '';
-			this.htmlCode = '';
+		function Conteiner() {
+			this.class = "";
+			this.id = "";
+			this.htmlCode = "";
 		}
 
-		Container.prototype.render = function () {
+		Conteiner.prototype.render = function () {
 			return this.htmlCode;
 		};
 
-		// Описываем класс меню
-		function Menu(my_id, my_class, my_items) {
-			Container.call(this);
+		function Menu(menuClass, menuId, menuItems) {
+			Conteiner.call(this);
+			this.class = menuClass;
+			this.id = menuId;
+			this.items = menuItems;
 
-			this.id = my_id;
-			this.className = my_class;
-			this.items = my_items;
 		}
 
-		Menu.prototype = Object.create(Container.prototype);
+		Menu.prototype = Object.create(Conteiner.prototype);
 		Menu.prototype.constructor = Menu;
 
 		Menu.prototype.render = function () {
-			var result = '<ul class="' + this.className + '" id="' + this.id + '">';
-			this.items.forEach(function (item) {
-				result += item.render();
-			});
-
-			// Также можно использовать и другую конструкцию, например на случай
-			// с объектами.
-			//
-			// for (var i = 0; i < this.items.length; i++) {
-			//     if(this.items[i] instanceof MenuItem){
-			//         result += this.items[i].render();
-			//     }
-			// }
-			//
-			// Результат будет одинаковый
-
-			result += '</ul>';
-			return result;
-		};
-		// remove
-		Menu.prototype.remove = function () {
-			document.querySelector('#' + this.id).remove();
-		};
-
-		function removeItem(a) {
-			menu.remove(a);
-		}
+			var result = "";
+			result += "<nav class=" + this.class + " id='" + this.id + "'>";
+			if(this.items != null){
+				this.items.forEach(function (item) {
+					result += item.render();
+				});
+      } else {
+				result += 'Menu!!!'
+      }
 
 
-		// Описываем класс пунктов меню
-		function MenuItem(my_href, my_name, my_id) {
-			Container.call(this);
-			this.href = my_href;
-			this.name = my_name;
-			this.my_id = my_id;
-		}
-
-		MenuItem.prototype = Object.create(Container.prototype);
-		MenuItem.prototype.constructor = MenuItem;
-
-		MenuItem.prototype.render = function () {
-			return '<li id="' + this.my_id + '" ><a href="' + this.href + '">' + this.name + '</a></li>';
-		};
-
-
-		// subMenu
-
-		function SubMenu(my_id, my_class, my_items) {
-			Menu.call(this);
-			this.id = my_id;
-			this.className = my_class;
-			this.items = my_items;
-		}
-
-
-		SubMenu.prototype = Object.create(Menu.prototype);
-		SubMenu.prototype.constructor = SubMenu;
-
-
-		SubMenu.prototype.render = function () {
-			var result = '<ul class="' + this.className + '" id="' + this.id + '">';
-			this.items.forEach(function (item) {
-				result += item.render();
-			});
-			result += '</ul>';
+			result += "</nav>";
 			return result;
 		};
 
-		function SubMenuItem(my_href, my_name, my_id) {
-			Container.call(this);
+		function MenuItems(menuItemsClass, menuItemsId, my_href, menuItemTitle, subMenu) {
+
 			this.href = my_href;
-			this.name = my_name;
-			this.my_id = my_id;
+			this.class = menuItemsClass;
+			this.id = menuItemsId || null;
+
+			this.title = menuItemTitle;
+			this.subMenu = subMenu || null;
+
 		}
 
-		SubMenuItem.prototype = Object.create(MenuItem.prototype);
-		SubMenuItem.prototype.constructor = SubMenuItem;
+		MenuItems.prototype = Object.create(Conteiner.prototype);
+		MenuItems.prototype.constructor = MenuItems;
 
-
-		SubMenuItem.prototype.render = function () {
-			return '<li id="' + this.my_id + '" ><a href="' + this.href + '">'
-				+ this.name + '</a></li>';
-		};
-
-
-		//******Варианты вывода нашего меню*******
-		// Вариант №1
-
-		/*
-			var menu_1 = new MenuItem('/', 'Главная', '1');
-        var menu_2 = new MenuItem('/catalogue/', 'Каталог', '2');
-        var menu_3 = new MenuItem('/contacts/', 'Контакты', '3');
-
-        var menu_items = [menu_1, mu_2, menu_3];
-
-
-
-    /*
-        var subMenu_1 = new MenuItem('/', 'submenu1', '11');
-        var subMenu_2 = new MenuItem('/catalogue/', 'submenu2', '22');
-        var subMenu_3 = new MenuItem('/contacts/', 'submenu3', '33');
-        var subMenu_items = [subMenu_1, subMenu_2, subMenu_3];
-        */
-		//var cont = document.querySelector('#menu');
-		//	var menu = new Menu('my_menu', 'my_class', menu_items);
-
-		//var submenu = new SubMenu('my_SubMenu', 'my_SubClass', subMenu_items);
-
-
-		window.onload = function () {
-
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET","./topMenu.json", true);
-			xhr.send();
-
-			xhr.onreadystatechange =  function() {
-
-				if (xhr.readyState !== 4) return;
-
-				if (xhr.status !== 200) {
-					console.log('Error', xhr.status,xhr.statusText);
-				}else{
-					console.log("ok", xhr.status,xhr.responseText)
-
-					var items = JSON.parse(xhr.responseText);
-					var menuItems = [];
-					var subMenuItems = [];
-					for(var i = 0; i< items.length;i++){
-						for ( var j = 0; j < items[i].length; j++){
-							menuItems.push(new MenuItem(items[i].key, items[i].value))
-            }
-
-						console.log(menuItems);
-					}
-
-					var menuBlock = document.getElementById('menu');
-					var menu = new Menu('my_menu', 'my_class', menuItems);
-					menuBlock.innerHTML = menu.render();
-
-
-				}
+		MenuItems.prototype.render = function () {
+			var result = "";
+			result = '<li class="this.class" id="this.id">' + this.title;
+			if (this.subMenu != null) {
+				this.subMenu.forEach(function (item) {
+					result +=item.render();
+				})
 			}
 
-
+		result += '</li>';
+		return result;
 		};
 
 
 
+		window.onload = function(){
+			var menuItems = new MenuItems('menuItems',  null,'./' ,'awfawf', null);
+
+
+
+
+			var menuBlock = document.querySelector('#menu');
+			var menu = new Menu('mainMenu', 'mainMenu', menuItems);
+
+
+			menuBlock.innerHTML = menu.render();
+
+    }
 
   </script>
 </head>
 <body>
-<div id="menu"></div>
+<div id="menu">
+
+</div>
+<p>lorem</p>
 
 
 </body>
