@@ -2,19 +2,39 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/dist/hw2__2/js/Container.js" />
+        <item url="file://$PROJECT_DIR$/dist/hw2__2/js/Menu.js" />
+        <item url="file://$PROJECT_DIR$/dist/hw2__2/js/MenuItem.js" />
+        <item url="file://$PROJECT_DIR$/dist/hw2__2/js/SubMenu.js" />
+        <item url="file://$PROJECT_DIR$/dist/hw4/js/main.js" />
+        <item url="file://$PROJECT_DIR$/dist/hw4/js/vendors/jquery-3.2.1.min.js" />
         <item url="file://$PROJECT_DIR$/dist/jquery-3.2.1.js" />
         <item url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/external/jquery/jquery.js" />
         <item url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/jquery-ui.js" />
         <item url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/jquery-ui.min.js" />
         <item url="file://$PROJECT_DIR$/dist/js/index.js" />
+        <item url="file://$PROJECT_DIR$/dist/lesson_5/js/Basket.js" />
+        <item url="file://$PROJECT_DIR$/dist/lesson_5/js/BasketItems.js" />
+        <item url="file://$PROJECT_DIR$/dist/lesson_5/js/Container.js" />
+        <item url="file://$PROJECT_DIR$/dist/lesson_5/js/jquery-3.2.1.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/dist/hw2__2/js/Container.js" />
+      <root url="file://$PROJECT_DIR$/dist/hw2__2/js/Menu.js" />
+      <root url="file://$PROJECT_DIR$/dist/hw2__2/js/MenuItem.js" />
+      <root url="file://$PROJECT_DIR$/dist/hw2__2/js/SubMenu.js" />
+      <root url="file://$PROJECT_DIR$/dist/hw4/js/main.js" />
+      <root url="file://$PROJECT_DIR$/dist/hw4/js/vendors/jquery-3.2.1.min.js" />
       <root url="file://$PROJECT_DIR$/dist/jquery-3.2.1.js" />
       <root url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/external/jquery/jquery.js" />
       <root url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/jquery-ui.js" />
       <root url="file://$PROJECT_DIR$/dist/jquery-ui-1.12.1.custom/jquery-ui.min.js" />
       <root url="file://$PROJECT_DIR$/dist/js/index.js" />
+      <root url="file://$PROJECT_DIR$/dist/lesson_5/js/Basket.js" />
+      <root url="file://$PROJECT_DIR$/dist/lesson_5/js/BasketItems.js" />
+      <root url="file://$PROJECT_DIR$/dist/lesson_5/js/Container.js" />
+      <root url="file://$PROJECT_DIR$/dist/lesson_5/js/jquery-3.2.1.js" />
     </CLASSES>
     <SOURCES />
   </library>

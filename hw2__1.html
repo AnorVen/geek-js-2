@@ -29,8 +29,8 @@
 			var result = "";
 			result += "<nav class=" + this.class + " id='" + this.id + "'>";
 			if(this.items != null){
-				this.items.forEach(function (item) {
-					result += item.render();
+				this.items.forEach(function (this.items) {
+					result += this.items.render();
 				});
       } else {
 				result += 'Menu!!!'
@@ -71,7 +71,13 @@
 
 
 		window.onload = function(){
-			var menuItems = new MenuItems('menuItems',  null,'./' ,'awfawf', null);
+			var menuItems = function () {
+				var res = '';
+				var arr = [{'menuItems':  null,'./': 'arr[i]'},{'menuItems':  null,'./' :'arr[i]'}];
+				for(var i = 0; i < arr.length; i++){
+					res.push(new MenuItems(arr[i]));
+        }
+			};
 
 
 
