@@ -10,12 +10,17 @@
 
   <script>
 		$(document).ready(function () {
+
 			var basket = new Basket();
-			var basketItem = new BasketItem(423, 3, 100);
+		//	var basketItem = new BasketItem(423, 3, 100);
+			var basketList = new BasketItems( 'list',null,'' );
+
+
 
 
 			basket.render('#basket_wrapper');
-			basketItem.collectBasketItems();
+			basketList.render();
+			basketItem.render();
 
 
 			// создаем разметку для последующего
@@ -24,17 +29,25 @@
 
 			$('.buyme').on('click', function () {
 				var idPruduct = parseInt($(this).attr('id').split('_')[1]);
-				var quantity = parseInt($(this).parent().find('.count').val());
-				// получаем количество из input
+				var quantity = parseInt($(this).parent().find('.count').val()); // получаем количество из input
 				var price = parseInt($(this).parent().find('.product-price').text());
 
 				basket.add(idPruduct, quantity, price);
 			});
+			$('.dell').on('click', function () {
+				var idPruduct = parseInt($(this).attr('id').split('_')[1]);
+				var quantity = parseInt($(this).parent().find('.count').val()); // получаем количество из input
+				var price = parseInt($(this).parent().find('.product-price').text());
+
+				basket.remove(idPruduct, quantity, price);
+			});
+
 		});
   </script>
 </head>
 <body>
 <div id="basket_wrapper"></div>
+<hr>
 <div class="good">
   <p>Товар с ID 123</p>
   <p>Цена: <span class="product-price">300</span> руб.</p>
@@ -42,6 +55,7 @@
   <!--Добавил в разметку поле для указания количества-->
   <input type="number" value="1" min="1" max="10" id="good_123_count" class="count">
   <button class="buyme" id="good_123">Добавить в корзину</button>
+  <button class="dell" id="del_good_123">удалить из карзины</button>
 </div>
 <div class="good">
   <p>Товар с ID 234</p>
@@ -50,6 +64,7 @@
   <!--Добавил в разметку поле для указания количества-->
   <input type="number" value="1" min="1" max="10" id="good_234_count" class="count">
   <button class="buyme" id="good_234">Добавить в корзину</button>
+  <button class="dell" id="del_good_234">удалить из карзины</button>
 </div>
 </body>
 </html>
