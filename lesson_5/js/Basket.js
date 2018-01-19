@@ -5,7 +5,7 @@ function Basket() {
 	this.amount = 0;
 
 	this.basketItems = [];
-//	this.collectBasketItems(); // Загружаем товары, которые уже добавлены (json файл)
+	this.collectBasketItems(); // Загружаем товары, которые уже добавлены (json файл)
 }
 
 Basket.prototype = Object.create(Container.prototype);
@@ -56,7 +56,7 @@ Basket.prototype.refresh = function () {
 	$basketDataDiv.append('<p>Сумма: ' + this.amount + '</p>');
 };
 
-Basket.prototype.collectBasketItems = function () {
+Basket.prototype.ajaxData = function () {
 	var appendId = '#' + this.id + '_items';
 
 	$.get({
@@ -65,12 +65,6 @@ Basket.prototype.collectBasketItems = function () {
 		success: function (data) {
 
 			// Получаем и выводим начальные данные корзины
-			var basketData = $('<div />', {
-				id: 'basket_data'
-				// text: 'Text'
-			}); //
-
-
 			var quantity = function () {
 				var q = 0;
 				for (var i = 0; i < data.basket.length; i++) {
@@ -81,17 +75,27 @@ Basket.prototype.collectBasketItems = function () {
 			this.countGoods = quantity();
 			this.amount = data.amount;
 
-			basketData.append('<p>Всего товаров: ' + this.countGoods + '</p>');
-			basketData.append('<p>Сумма: ' + this.amount + '</p>');
 
-			basketData.appendTo(appendId);
-
-			for (var index in data.basket) {
-				this.basketItems.push(data.basket[index]);
-			}
 		},
 		context: this
 	});
 };
 
 
+Basket.prototype.collectBasketItems = function () {
+	var appendId = '#' + this.id + '_items';
+
+	this.ajaxData();
+	var basketData = $('<div />', {
+		id: 'basket_data'
+		// text: 'Text'
+	}); //
+
+
+	basketData.append('<p>Всего товаров: ' + this.countGoods + '</p>');
+	basketData.append('<p>Сумма: ' + this.amount + '</p>');
+
+	basketData.appendTo(appendId);
+
+
+};

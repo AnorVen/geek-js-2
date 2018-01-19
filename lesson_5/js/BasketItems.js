@@ -1,3 +1,26 @@
+function BasketItems(className, id, items) {
+	Basket.call(this);
+
+	this.className = className;
+	this.id = id;
+	this.items = items;
+}
+
+BasketItem.prototype = Object.create(Basket.prototype);
+BasketItem.prototype.constructor = BasketItem;
+
+BasketItem.prototype.render = function(){
+	var items;
+	for(var i = 0; i< this.items.length; i++){
+		var li = $('<li />');
+		items.append(li.append(this.items[i].render()));
+	}
+	return items.innerHTML;
+
+};
+
+
+
 function BasketItem(id_product,  quantity, price) {
 	Container.call(this, 'basket');
 
@@ -40,7 +63,9 @@ BasketItem.prototype.render = function(){
 
 };
 
-BasketItem.prototype.collectBasketItems = function () {
+
+/*
+BasketItem.prototype.collectBasketItem = function () {
 	var appendId = '#' + this.id + '_items';
 	$.get({
 		url: './basket.json',
@@ -84,3 +109,4 @@ BasketItem.prototype.collectBasketItems = function () {
 		context: this
 	});
 };
+*/
