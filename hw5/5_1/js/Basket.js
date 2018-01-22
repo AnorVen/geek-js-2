@@ -1,3 +1,4 @@
+"use strict";
 function Basket() {
 	Container.call(this, 'basket');
 	this.countGoods = 0;
@@ -75,7 +76,7 @@ Basket.prototype.refresh = function () {
 	var $basketDataDiv = $('#basket_data'); // тут была ошибка, вместо basket_data был basket_wrapper
 	$basketDataDiv.empty();
 	$basketDataDiv.append('<p>Всего товаров: ' + this.countGoods + '</p>');
-	$basketDataDiv.append('<p>Сумма: ' + this.amount + '</p>');
+	$basketDataDiv.append('<p>Сумма: ' + + this.amount + '</p>');
 };
 
 Basket.prototype.ajaxData = function () {

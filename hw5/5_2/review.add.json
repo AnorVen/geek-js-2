@@ -1,5 +1,20 @@
 {
-  "id_user" : 123,
-  "text" : "123!!!"
-  "id_comment": 123
+  "result": 1,
+  "lastId": 2,
+  "comments": [
+    {
+      "id_comment": 1,
+      "text": "This is my first comment",
+      "id_user": 123,
+      "status": 1
+    },
+
+    {
+      "id_comment": 2,
+      "text": "This is my second comment",
+      "id_user": 223,
+      "status": 0
+    }
+
+  ]
 }

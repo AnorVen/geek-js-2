@@ -8,8 +8,20 @@
   <script src="js/Feetback.js"></script>
   <script>
     $(document).ready(function () {
-    	var feet1 = new Feetback(1,2,3);
-    	feet1.render();
+
+    	var feetback = new Feetback($('.render'));
+    	$('#btn').on('click', function () {
+        var newComment = {
+        	coment: $("#textarea").val(),
+          name : $('#name').val()
+        };
+		    $("#textarea").val('');
+		    $('#name').val('');
+		    console.log(newComment);
+		    feetback.add(newComment);
+		    return false
+
+	    })
 
     })
   </script>
@@ -17,9 +29,9 @@
 </head>
 <body>
 <form action="#">
-  <textarea name="" id="" cols="30" rows="10"></textarea>
-  <input type="text" placeholder="Ваше имя">
-  <button type="submit">отправить</button>
+  <textarea name="textarea" id="textarea" cols="30" rows="10"></textarea>
+  <input type="text" placeholder="Ваше имя" id="name">
+  <button type="submit" id="btn">отправить</button>
 </form>
 
 <div class="render">

@@ -1,41 +1,60 @@
-function Feetback(id, id_coment, text) {
-	Container.call(this, 'render');
-	this.id = id;
-	this.id_coment = id_coment;
-	this.text = text;
+function Feetback(selector) {
+	this.selector = selector;
+	Container.call(this, '.render');
+	this.lastId = 1;
+	this.feetbackItems = [];
 	this.ajax();
 }
 
-Feetback.prototype = object.create(Container.prototype);
+Feetback.prototype = Object.create(Container.prototype);
 Feetback.prototype.constructor = Feetback;
 
-Feetback.prototype.render = function(){
-	var result = "";
-	result +='<ul>';
-	result += '<li id="this.id"> id = '+ this.id;
-	result += '<li id="this.id_coment"> id_coment = '+ this.id_coment;
-	result += '<li id="this.text"> text = '+ this.text;
+Feetback.prototype.render = function(selector){
+	var reviewDiv = $('<div />', {
+		id: this.id,
+		text: 'Комментарии'
+	});
+	var list = $('<li />',{
+		id: 'comments:ist'
+	});
+	reviewDiv.append(list);
+
+	var result = $('<li />',{
+		id: 'item'
+	});
+	list.append(result);
+	reviewDiv.appendTo(this.selector);
+
+}
 
 
-	result +='</ul>';
-
-	return result;
-
-};
 Feetback.prototype.ajax = function(){
-	var appendId = $('.render')
 	$.get({
 		url: './review.add.json',
 		dataType: 'json',
 		success: function (data) {
-			var items = [];
-			for(var key in data){
-				items.push(data[key].value);
+			for (var index in data.comments) {
+				this.feetbackItems.push(data.comments[index]);
 			}
-			return items;
-
-			appendId.append(items);
+			this.lastId = data.lastId;
+			this.render(this.selector);
+			this.refresh();
 		},
 		context: this
 	});
+}
+
+Feetback.prototype.refresh = function() {
+	var item = $('#item');
+	item.empty();
+		for (var i = 0; i < this.feetbackItems.length; i++) {
+		commentLine = '<div><span>' + this.feetbackItems[i]['id_comment'] + ': ' + this.feetbackItems[i]['text'] +
+			' | ' + '</span><span id="commentDel-' + i + '"> X </span>';
+		if (this.feetbackItems[i]['status'] === 0) {
+			commentLine += '<span id="commentSub-' + i + '"> M </span>';
+		}
+		commentLine += '</div>';
+
+			item.append(commentLine);
+	}
 }
