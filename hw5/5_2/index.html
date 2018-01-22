@@ -6,6 +6,7 @@
   <script src="js/jquery-3.2.1.js"></script>
   <script src="js/Container.js"></script>
   <script src="js/Feetback.js"></script>
+
   <script>
     $(document).ready(function () {
 
@@ -13,7 +14,7 @@
     	$('#btn').on('click', function () {
         var newComment = {
         	coment: $("#textarea").val(),
-          name : $('#name').val()
+          name : $("#name").val()
         };
 		    $("#textarea").val('');
 		    $('#name').val('');
@@ -22,9 +23,27 @@
 		    return false
 
 	    })
+      $('/^commentDel/').on('click', function () {
+      	console.log(this.paren);
+      	this.paren.delete;
+
+      })
 
     })
   </script>
+
+  <style>
+    span[id^="commentDel"] {
+      cursor: pointer;
+      font-weight: bold;
+      color: red;
+    }
+    span[id^="commentSub"]{
+      cursor: pointer;
+      font-weight: bold;
+      color: blue;
+    }
+  </style>
 
 </head>
 <body>

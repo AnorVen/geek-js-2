@@ -9,26 +9,22 @@ function Feetback(selector) {
 Feetback.prototype = Object.create(Container.prototype);
 Feetback.prototype.constructor = Feetback;
 
-Feetback.prototype.render = function(selector){
+Feetback.prototype.render = function (selector) {
 	var reviewDiv = $('<div />', {
 		id: this.id,
 		text: 'Комментарии'
 	});
-	var list = $('<li />',{
-		id: 'comments:ist'
+	var list = $('<ul />', {
+		id: 'commentsList'
 	});
 	reviewDiv.append(list);
 
-	var result = $('<li />',{
-		id: 'item'
-	});
-	list.append(result);
 	reviewDiv.appendTo(this.selector);
 
-}
+};
 
 
-Feetback.prototype.ajax = function(){
+Feetback.prototype.ajax = function () {
 	$.get({
 		url: './review.add.json',
 		dataType: 'json',
@@ -42,19 +38,44 @@ Feetback.prototype.ajax = function(){
 		},
 		context: this
 	});
+};
+
+Feetback.prototype.refresh = function () {
+	var list = $('#commentsList');
+	list.empty();
+	for (var i = 0; i < this.feetbackItems.length; i++) {
+		commentLine = '<li><span>' + this.feetbackItems[i]['id_comment'] + ': '
+			+ this.feetbackItems[i]['text']
+			+ ' | Name: ' + this.feetbackItems[i]['id_user']
+			+ ' | ' + '</span><span id="commentDel-' + i + '"> X </span>';
+		if (this.feetbackItems[i]['status'] === 0) {
+			commentLine += '<span id="commentSub-' + i + '"> + </span>';
+		}
+		commentLine += '</li>';
+
+		list.append(commentLine);
+	}
+};
+
+Feetback.prototype.add = function (obj) {
+	//
+	// вот тут я чего-то уже плыву и не могу понять почему не проходит name
+//
+
+	var newComment = {
+		"id_comment": ++this.lastId,
+		"text": obj.coment,
+		"name": obj.name,
+		"status": 0
+	};
+
+
+	this.feetbackItems.push(newComment);
+
+	this.refresh();
 }
 
-Feetback.prototype.refresh = function() {
-	var item = $('#item');
-	item.empty();
-		for (var i = 0; i < this.feetbackItems.length; i++) {
-		commentLine = '<div><span>' + this.feetbackItems[i]['id_comment'] + ': ' + this.feetbackItems[i]['text'] +
-			' | ' + '</span><span id="commentDel-' + i + '"> X </span>';
-		if (this.feetbackItems[i]['status'] === 0) {
-			commentLine += '<span id="commentSub-' + i + '"> M </span>';
-		}
-		commentLine += '</div>';
-
-			item.append(commentLine);
-	}
+Feetback.prototype.delete = function(comment) {
+	this.feetbackItems.splice(comment, 1);
+	this.refresh();
 }
